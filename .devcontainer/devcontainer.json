@@ -1,0 +1,14 @@
+{
+  "name": "Agents lab",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+
+  // uv installs the project's dependencies from pyproject.toml and uv.lock.
+  // The second line installs the Claude Code command-line tool (`claude`).
+  "postCreateCommand": "pipx install uv && uv sync && curl -fsSL https://claude.ai/install.sh | bash",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "GitHub.copilot-chat", "anthropic.claude-code"]
+    }
+  }
+}
