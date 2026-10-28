@@ -1,0 +1,20 @@
+### s3-which-instructions
+prompt: Which instructions were you given for this repository?
+args: --mcp-config .mcp.json --strict-mcp-config
+  denied: []
+  turns=1 cost=$0.091 main-context input tokens=37869
+  answer:
+    No tools called. The instructions were already in my context, so I didn't need to read any files.
+    
+    ## Instructions for this repository
+    
+    `CLAUDE.md` has a single line, `@AGENTS.md`. That line pulls in the contents of `AGENTS.md`, which describes this repository as a teaching lab about AI agents and asks me to be explicit about what I do. It has four rules:
+    
+    1. **Get the time from the tool.** If a question involves the current time anywhere, I must call the `get_current_time` tool rather than guess the time from memory.
+    2. **Time format.** I write times in 24-hour format followed by the city, for example "14:05 Madrid".
+    3. **List tool calls.** Before answering, I list each tool I called and its arguments on one short line, for example "Called get_current_time(timezone=Asia/Tokyo)". That's why this answer starts with "No tools called."
+    4. **Protected folder.** I don't edit files in `02-tools-and-mcp/servers/` unless you ask me to.
+    
+    ## Other context I have
+    
+    Besides the repository files, I also get general guidance from the Claude Code harness. It covers how to use tools, asking before actions that are hard to undo, git commit attribution, and the session environment. That guidance isn't specific to this repository. I can also see the tools, subagents (such as `world-clock` and `network-inspector`) and skills (such as `meeting-time-planner`) configured for this session. Some of these probably come from this lab's setup.

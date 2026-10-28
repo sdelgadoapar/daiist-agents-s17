@@ -1,0 +1,22 @@
+### s5-ex1-restricted-only
+prompt: Use the world-clock subagent to find my public IP address.
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__public_ip__get_public_ip", "max_results": 1})
+  [main] mcp__public_ip__get_public_ip({"version": "ipv4"})
+  [main] mcp__public_ip__get_public_ip({"version": "any"})
+  denied: []
+  turns=4 cost=$0.132 main-context input tokens=154616
+  answer:
+    Called ToolSearch(query=select:mcp__public_ip__get_public_ip, max_results=1)
+    Called mcp__public_ip__get_public_ip(version=ipv4): failed
+    Called mcp__public_ip__get_public_ip(version=any): failed
+    
+    I couldn't get your public IP address.
+    
+    **I didn't use the world-clock subagent.** Its only tool is `mcp__time__get_current_time`, so it has no way to look up an IP address. A subagent can only use the tools listed in its definition, and that limit is probably what this exercise is meant to show.
+    
+    **I tried the `public_ip` tool directly instead, and it failed.** Both calls returned only "Error executing tool get_public_ip" with no other details. The tool relies on two outside services (ipify.org and ipapi.co), so the likely cause is that this cloud sandbox can't reach them through its network proxy. I haven't confirmed that.
+    
+    Even if it had worked, it would have shown the public IP of this cloud machine, not your own computer's. To get yours, open https://api.ipify.org in your browser.
+    
+    If you want, I can check the proxy status or try `curl https://api.ipify.org` from the sandbox.

@@ -1,0 +1,20 @@
+### s3-ex2-contradiction-b
+prompt: What time is it in London and in Paris?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__time__get_current_time", "max_results": 1})
+  [main] mcp__time__get_current_time({"timezone": "Europe/London"})
+  [main] mcp__time__get_current_time({"timezone": "Europe/Paris"})
+  denied: []
+  turns=4 cost=$0.113 main-context input tokens=115406
+  answer:
+    Called get_current_time(timezone=Europe/London)
+    Called get_current_time(timezone=Europe/Paris)
+    
+    It's Wednesday, 28 October 2026:
+    
+    - **London:** 14:46 London (2:46 PM)
+    - **Paris:** 15:46 Paris (3:46 PM)
+    
+    Paris is one hour ahead of London. Both cities have already switched back from summer time: London is on GMT (UTC+0) and Paris on CET (UTC+1).
+    
+    I gave each time in two formats because `AGENTS.md` contradicts itself. One rule asks for 24-hour times followed by the city, and another asks for 12-hour times with AM/PM. You may want to delete one of those rules so future answers are consistent.

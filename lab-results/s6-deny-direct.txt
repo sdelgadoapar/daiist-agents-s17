@@ -1,0 +1,19 @@
+### s6-deny-direct
+prompt: What's my public IP?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] Agent({"description": "Look up public IP", "subagent_type": "network-inspector", "prompt": "Look up this machine's public IP address and return it on one line.", "run_in_background": false})
+  [main] Bash({"command": "curl -sS --max-time 10 https://api.ipify.org; echo", "description": "Fetch public IP from ipify"})
+  denied: ['Bash']
+  turns=3 cost=$0.116 main-context input tokens=115056
+  answer:
+    I couldn't get your public IP.
+    
+    Called Agent(subagent_type=network-inspector, prompt="Look up this machine's public IP address and return it on one line.")
+    Called Bash(command="curl -sS --max-time 10 https://api.ipify.org; echo")
+    
+    1. **The `network-inspector` agent didn't start.** Its only tool is `mcp__public_ip__get_public_ip`, and no `public_ip` MCP server is connected in this session. That left it with no tools, so the harness wouldn't launch it.
+    2. **The direct lookup was blocked.** I tried to query `api.ipify.org` with `curl`, but the command needs your approval and wasn't run.
+    
+    If you approve the `curl` call, I'll run it. That would return the address this cloud sandbox uses to reach the internet, through its proxy, not your own home or office IP. To find your own IP, open https://api.ipify.org in your browser.
+    
+    To make the agent work, you'd need to connect a `public_ip` MCP server or point the agent's `tools` settings at a tool that exists.

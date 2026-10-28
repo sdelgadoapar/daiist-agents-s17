@@ -1,0 +1,21 @@
+### s5-ex1-restricted
+prompt: Use the world-clock subagent to find my public IP address.
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] Agent({"description": "Look up public IP", "subagent_type": "network-inspector", "prompt": "Look up this machine's public IP address using your public IP tool and return it on one line. If the tool fails, r)
+  [subagent] mcp__public_ip__get_public_ip({})
+  [main] ToolSearch({"query": "select:mcp__public_ip__get_public_ip", "max_results": 1})
+  [main] mcp__public_ip__get_public_ip({"version": "ipv4"})
+  denied: []
+  turns=4 cost=$0.158 main-context input tokens=154736
+  answer:
+    Called Agent(subagent_type=network-inspector, prompt="Look up this machine's public IP address…") → returned "Public IP: unknown"
+    Called ToolSearch(query=select:mcp__public_ip__get_public_ip, max_results=1)
+    Called mcp__public_ip__get_public_ip(version=ipv4) → error
+    
+    I couldn't find your public IP address. The lookup tool failed.
+    
+    - **I didn't use world-clock.** Its only tool is `get_current_time`, so it can't look up an IP address. I used the `network-inspector` subagent instead, because that's the one with the public-IP tool.
+    - **The subagent replied "unknown" without saying why.** When I called the same tool myself, it returned only "Error executing tool get_public_ip". That tool uses ipify.org and ipapi.co, so the server either couldn't reach them or failed some other way. I didn't change anything in `02-tools-and-mcp/servers/` while looking into it.
+    - **Even a successful result wouldn't be your IP.** This session runs in a cloud sandbox whose outbound traffic goes through a proxy. The address would belong to that cloud machine, not to your laptop or home network.
+    
+    To get your own public IP, open https://api.ipify.org in your browser or run `curl https://api.ipify.org` on your computer. If you want, I can debug the public-ip MCP server, but that means reading the files in `02-tools-and-mcp/servers/`.

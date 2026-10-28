@@ -1,0 +1,24 @@
+### s6-ex1-hook-only
+prompt: What's my public IP?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__public_ip__get_public_ip", "max_results": 1})
+  [main] mcp__public_ip__get_public_ip({"version": "ipv4"})
+  [main] mcp__public_ip__get_public_ip({"version": "any"})
+  [main] Bash({"command": "curl -sS --max-time 15 https://api.ipify.org; echo; curl -sS \"$HTTPS_PROXY/__agentproxy/status\" | head -c 600", "description": "Look up public IP via ipify and check proxy status"})
+  denied: ['Bash']
+  turns=5 cost=$0.139 main-context input tokens=192983
+  answer:
+    I couldn't find your public IP. Both ways I tried to look it up failed.
+    
+    Tools I called:
+    - Called ToolSearch(query=select:mcp__public_ip__get_public_ip, max_results=1)
+    - Called get_public_ip(version=ipv4): failed with "Error executing tool get_public_ip"
+    - Called get_public_ip(version=any): failed with the same error
+    - Called Bash(command=curl https://api.ipify.org, plus a check on the network proxy's status): blocked
+    
+    1. **The `public_ip` MCP tool errored both times**, once asking for an IPv4 address and once for any address type. It gave no reason. This tool looks up the address with ipify.org and the country with ipapi.co, so the server may not be able to reach those sites.
+    2. **The fallback `curl` command was blocked** by the repo's guardrail hook, `06-guardrails/check_command.py`. It rejects any shell command that uses the network. I didn't try to get around it because it's a deliberate safety rule in this lab.
+    
+    Even if a lookup worked, this session's outbound traffic goes through a network proxy. The address returned would be the proxy's, not your computer's.
+    
+    To see your own IP, open https://api.ipify.org in your browser, or run `curl https://api.ipify.org` in your own terminal. To get the MCP tool working, check the server log for `servers/public_ip`.

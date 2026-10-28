@@ -1,0 +1,15 @@
+### s1-no-tools
+prompt: What time is it in Tokyo right now?
+args: --strict-mcp-config
+  [main] Agent({"description": "Get current Tokyo time", "subagent_type": "world-clock", "prompt": "Call get_current_time with timezone=Asia/Tokyo and return the exact result (date, time in 24-hour format, and UTC o)
+  [main] Bash({"command": "TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M %Z (UTC%:z)'", "description": "Show current date and time in Tokyo"})
+  denied: []
+  turns=3 cost=$0.045 main-context input tokens=114549
+  answer:
+    It's **23:46 Tokyo** (Wednesday, 28 October 2026, JST, UTC+9).
+    
+    Tools I called:
+    - Called Agent(subagent_type=world-clock, prompt="get_current_time with timezone=Asia/Tokyo"). It failed because the `get_current_time` tool (`mcp__time__get_current_time`) isn't connected in this session.
+    - Called Bash(command=`TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M %Z (UTC%:z)'`)
+    
+    AGENTS.md says to use `get_current_time`, but that tool wasn't available. So the time above comes from the system clock, converted to Tokyo time. If the course expects the time to come from that tool, check that the time MCP server under `02-tools-and-mcp/servers/` is set up and connected.

@@ -9,6 +9,11 @@
       "type": "stdio",
       "command": "uv",
       "args": ["run", "02-tools-and-mcp/servers/ip_server.py"]
+    },
+    "weather": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "02-tools-and-mcp/servers/weather_server.py"]
     }
   }
 }

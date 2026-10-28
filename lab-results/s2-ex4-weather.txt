@@ -1,0 +1,18 @@
+### s2-ex4-weather
+prompt: What's the weather like in Madrid right now?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__weather__get_current_weather,mcp__time__get_current_time", "max_results": 2})
+  [main] mcp__weather__get_current_weather({"city": "Madrid"})
+  [main] mcp__time__get_current_time({"timezone": "Europe/Madrid"})
+  [main] mcp__weather__get_current_weather({"city": "Madrid"})
+  denied: []
+  turns=5 cost=$0.122 main-context input tokens=153840
+  answer:
+    Called get_current_time(timezone=Europe/Madrid)
+    Called get_current_weather(city=Madrid), twice, and both calls failed
+    
+    I can't tell you the weather in Madrid right now. It's 15:46 Madrid (Wednesday, 28 October 2026). The weather tool returned "Error executing tool get_current_weather" twice and gave no details about why.
+    
+    The weather server gets its data from open-meteo.com, so the likely causes are that the site is unreachable through this environment's network proxy or that the server itself has a problem. I haven't checked which one it is.
+    
+    I could look up Madrid's weather with a web search instead, or look into why the weather server is failing. Which would you prefer?

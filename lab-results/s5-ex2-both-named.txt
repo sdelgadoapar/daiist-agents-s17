@@ -1,0 +1,30 @@
+### s5-ex2-both-named
+prompt: Use the world-clock subagent for the time in Madrid, Lima and Tokyo, and the network-inspector subagent for my public IP.
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] Agent({"description": "World clock lookup", "subagent_type": "world-clock", "prompt": "Get the current local time in Madrid (Europe/Madrid), Lima (America/Lima) and Tokyo (Asia/Tokyo) using get_current_time)
+  [main] Agent({"description": "Public IP lookup", "subagent_type": "network-inspector", "prompt": "Look up this machine's public IP address with get_public_ip. Return it on one line, and state the tool call you mad)
+  [subagent] mcp__time__get_current_time({"timezone": "Europe/Madrid"})
+  [subagent] mcp__time__get_current_time({"timezone": "America/Lima"})
+  [subagent] mcp__time__get_current_time({"timezone": "Asia/Tokyo"})
+  [subagent] mcp__public_ip__get_public_ip({"version": "ipv4"})
+  denied: []
+  turns=3 cost=$0.155 main-context input tokens=77007
+  answer:
+    Here's what was called:
+    - Called Agent(subagent_type=world-clock), which called:
+      - get_current_time(timezone=Europe/Madrid)
+      - get_current_time(timezone=America/Lima)
+      - get_current_time(timezone=Asia/Tokyo)
+    - Called Agent(subagent_type=network-inspector), which called get_public_ip() once.
+    
+    **Current times (Wednesday, 28 October 2026)**
+    
+    | City | Local time | UTC offset |
+    |---|---|---|
+    | Madrid | 15:48 Madrid | +01:00 |
+    | Lima | 09:48 Lima | −05:00 |
+    | Tokyo | 23:48 Tokyo | +09:00 |
+    
+    **Public IP:** I couldn't get your public IP. The network-inspector subagent called the tool once and came back with only "Public IP: unknown", without saying why. The lookup service might be unreachable from behind this session's proxy, or it might have returned an error.
+    
+    Do you want me to look into why?

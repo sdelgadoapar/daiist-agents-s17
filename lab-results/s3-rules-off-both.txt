@@ -1,0 +1,9 @@
+### s3-rules-off-both
+prompt: What time is it in New York?
+args: --mcp-config .mcp.json --strict-mcp-config   (copy with CLAUDE.md and AGENTS.md both renamed to *.off)
+  [main] ToolSearch({"query": "select:mcp__time__get_current_time", "max_results": 1})
+  [main] mcp__time__get_current_time({"timezone": "America/New_York"})
+  denied: []
+  turns=3 cost=$0.099 main-context input tokens=113524
+  answer:
+    In New York it's 10:47 AM on Wednesday, October 28, 2026. The city is on Eastern Daylight Time (UTC−4).

@@ -1,0 +1,21 @@
+### s2-ex3-vague-docstring
+prompt: What time is it right now in Madrid, Lima and Kathmandu?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__time__get_current_time", "max_results": 1})
+  [main] mcp__time__get_current_time({"timezone": "Europe/Madrid"})
+  [main] mcp__time__get_current_time({"timezone": "America/Lima"})
+  [main] mcp__time__get_current_time({"timezone": "Asia/Kathmandu"})
+  denied: []
+  turns=5 cost=$0.115 main-context input tokens=115541
+  answer:
+    Called get_current_time(timezone=Europe/Madrid)
+    Called get_current_time(timezone=America/Lima)
+    Called get_current_time(timezone=Asia/Kathmandu)
+    
+    It's Wednesday 28 October 2026 in all three cities:
+    
+    - **15:46 Madrid** (UTC+01:00)
+    - **09:46 Lima** (UTC−05:00)
+    - **20:31 Kathmandu** (UTC+05:45)
+    
+    Kathmandu's clock is 45 minutes off from Madrid's and Lima's because Nepal's UTC offset ends in :45 rather than a whole hour.

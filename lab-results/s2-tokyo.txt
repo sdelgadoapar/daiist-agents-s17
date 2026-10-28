@@ -1,0 +1,11 @@
+### s2-tokyo
+prompt: What time is it in Tokyo right now?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__time__get_current_time", "max_results": 1})
+  [main] mcp__time__get_current_time({"timezone": "Asia/Tokyo"})
+  denied: []
+  turns=3 cost=$0.095 main-context input tokens=114372
+  answer:
+    Called get_current_time(timezone=Asia/Tokyo)
+    
+    It's **23:46 Tokyo** on Wednesday, 28 October 2026 (UTC+09:00).

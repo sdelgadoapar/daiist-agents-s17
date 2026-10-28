@@ -1,0 +1,13 @@
+### s3-ex2-contradiction-a
+prompt: What time is it in New York?
+args: --mcp-config .mcp.json --strict-mcp-config
+  [main] ToolSearch({"query": "select:mcp__time__get_current_time", "max_results": 1})
+  [main] mcp__time__get_current_time({"timezone": "America/New_York"})
+  denied: []
+  turns=3 cost=$0.108 main-context input tokens=115042
+  answer:
+    Called get_current_time(timezone=America/New_York)
+    
+    It's **10:46 New York** on Wednesday, 28 October 2026 (UTC−4, Eastern Daylight Time).
+    
+    `AGENTS.md` asks for two different time formats: one rule says 24-hour followed by the city, and another says 12-hour with AM/PM. For this time both look almost the same. In 12-hour format it's **10:46 AM New York**. You could remove one of the two rules from `AGENTS.md` so the format is clear for afternoon times.
